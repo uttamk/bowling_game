@@ -46,6 +46,13 @@ public class GameTest {
 
     }
 
+    @Test
+    public void testPerfectGame(){
+        rollMany(12, 10);
+
+        assertEquals(300, game.score());
+    }
+
     private void rollStrike() {
         rollMany(1, 10);
     }
