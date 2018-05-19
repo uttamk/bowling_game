@@ -26,6 +26,20 @@ public class GameTest {
         assertEquals(20, game.score());
     }
 
+    @Test
+    public void testOneSpare() {
+        rollSpare();
+        rollMany(1, 3);
+        rollMany(17, 0);
+
+        assertEquals(16, game.score());
+    }
+
+    private void rollSpare() {
+        game.roll(5);
+        game.roll(5);
+    }
+
     private void rollMany(int times, int pins) {
         for (int i = 0; i < times; i++) {
             game.roll(pins);
