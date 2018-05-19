@@ -35,6 +35,21 @@ public class GameTest {
         assertEquals(16, game.score());
     }
 
+    @Test
+    public void testOneStrike() {
+        rollStrike();
+        rollMany(1, 3);
+        rollMany(1, 4);
+        rollMany(16, 0);
+
+        assertEquals(24, game.score());
+
+    }
+
+    private void rollStrike() {
+        rollMany(1, 10);
+    }
+
     private void rollSpare() {
         game.roll(5);
         game.roll(5);
