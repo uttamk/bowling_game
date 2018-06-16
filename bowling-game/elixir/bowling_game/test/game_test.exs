@@ -20,9 +20,17 @@ defmodule GameTest do
 
   test "roll one spare" do
     game_state = %BowlingGame.Game{
-      rolled_pins: [5, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      rolled_pins: [5, 5, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
 
-    assert BowlingGame.Game.score(game_state) == 16
+    assert BowlingGame.Game.score(game_state) == 19
+  end
+
+  test "roll one strike" do
+    game_state = %BowlingGame.Game{
+      rolled_pins: [10, 3, 4]
+    }
+
+    assert BowlingGame.Game.score(game_state) == 24
   end
 end

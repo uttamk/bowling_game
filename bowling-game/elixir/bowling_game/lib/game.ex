@@ -31,12 +31,21 @@ defmodule BowlingGame.Game do
 
   def single_frame_score(frame, rest) do
     frame_score = Enum.sum(frame)
-    frame_score + spare_bonus_if_any(frame, rest)
+    frame_score + strike_bonus_if_any(frame, rest) + spare_bonus_if_any(frame, rest)
   end
 
   def spare_bonus_if_any(frame, rest) do
     is_spare?(frame)
     |> spare_bonus(rest)
+  end
+
+  def strike_bonus_if_any(frame, rest) do
+    is_strike?(frame)
+    |> strike_bonus(rest)
+  end
+
+  def is_spare?(frame) when length(frame) < 2 do
+    false
   end
 
   def is_spare?(frame) do
@@ -48,6 +57,22 @@ defmodule BowlingGame.Game do
   end
 
   def spare_bonus(false, _) do
+    0
+  end
+
+  def is_strike?(frame) when length(frame) != 1 do
+    false
+  end
+
+  def is_strike?(frame) do
+    Enum.sum(frame) == 10
+  end
+
+  def strike_bonus(true, rest) do
+    hd(rest) + hd(tl(rest))
+  end
+
+  def strike_bonus(false, _) do
     0
   end
 
