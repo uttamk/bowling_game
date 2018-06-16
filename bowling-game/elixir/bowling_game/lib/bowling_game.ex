@@ -17,15 +17,34 @@ defmodule BowlingGameServer do
   use GenServer
 
   def init(_args) do
-    {:ok, 0}
+    {:ok, BowlingGame.Game.init()}
   end
 
   def handle_call({:roll, pins}, _from, state) do
-    state = state + pins
+    state = BowlingGame.Game.roll(state, pins)
     {:reply, state, state}
   end
 
   def handle_call({:score}, _from, state) do
-    {:reply, state, state}
+    score = BowlingGame.Game.score(state)
+    {:reply, score, state}
+  end
+end
+
+defmodule BowlingGame.Game do
+  defstruct(rolled_pins: [])
+
+  def init do
+    %BowlingGame.Game{}
+  end
+
+  def roll(game_state, pins) do
+    %BowlingGame.Game{
+      rolled_pins: game_state.rolled_pins ++ [pins]
+    }
+  end
+
+  def score(game_state) do
+    Enum.sum(game_state.rolled_pins)
   end
 end
