@@ -30,21 +30,3 @@ defmodule BowlingGameServer do
     {:reply, score, state}
   end
 end
-
-defmodule BowlingGame.Game do
-  defstruct(rolled_pins: [])
-
-  def init do
-    %BowlingGame.Game{}
-  end
-
-  def roll(game_state, pins) do
-    %BowlingGame.Game{
-      rolled_pins: game_state.rolled_pins ++ [pins]
-    }
-  end
-
-  def score(game_state) do
-    Enum.sum(game_state.rolled_pins)
-  end
-end
