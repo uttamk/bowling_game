@@ -68,6 +68,10 @@ defmodule BowlingGame.Game do
     Enum.sum(frame) == 10
   end
 
+  def strike_bonus(true, rest) when length(rest) < 3 do
+    0
+  end
+
   def strike_bonus(true, rest) do
     hd(rest) + hd(tl(rest))
   end

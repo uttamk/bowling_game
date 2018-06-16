@@ -50,6 +50,17 @@ defmodule BowlingGameTest do
     assert BowlingGame.score(game_pid) == 24
   end
 
+
+  test "perfect game" do
+    game_pid = BowlingGame.start()
+
+    game_pid
+    |> roll_many(12, 10)
+
+    assert BowlingGame.score(game_pid) == 300
+  end
+
+
   def roll_many(game_pid, times, pins) do
     Enum.each(1..times, fn x -> BowlingGame.roll(game_pid, pins) end)
     game_pid
