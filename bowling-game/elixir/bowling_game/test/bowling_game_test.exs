@@ -62,7 +62,7 @@ defmodule BowlingGameTest do
 
 
   def roll_many(game_pid, times, pins) do
-    Enum.each(1..times, fn x -> BowlingGame.roll(game_pid, pins) end)
+    Enum.each(1..times, fn _ -> BowlingGame.roll(game_pid, pins) end)
     game_pid
   end
 end

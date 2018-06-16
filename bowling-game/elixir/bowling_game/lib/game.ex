@@ -1,18 +1,14 @@
 defmodule BowlingGame.Game do
-  defstruct(rolled_pins: [])
-
   def init do
-    %BowlingGame.Game{}
+    []
   end
 
-  def roll(game_state, pins) do
-    %BowlingGame.Game{
-      rolled_pins: game_state.rolled_pins ++ [pins]
-    }
+  def roll(rolled_pins, pins) do
+      rolled_pins ++ [pins]
   end
 
-  def score(game_state) do
-    frame_scores(game_state.rolled_pins)
+  def score(rolled_pins) do
+    frame_scores(rolled_pins)
     |> Enum.sum()
   end
 
@@ -44,7 +40,7 @@ defmodule BowlingGame.Game do
     |> strike_bonus(rest)
   end
 
-  def is_spare?(frame) when length(frame) < 2 do
+  def is_spare?(frame) when length(frame) == 1 do
     false
   end
 
@@ -52,11 +48,11 @@ defmodule BowlingGame.Game do
     Enum.sum(frame) == 10
   end
 
-  def spare_bonus(true, rest) do
+  def spare_bonus(_is_spare = true, rest) do
     hd(rest)
   end
 
-  def spare_bonus(false, _) do
+  def spare_bonus(_is_spare = false, _) do
     0
   end
 
@@ -68,15 +64,15 @@ defmodule BowlingGame.Game do
     Enum.sum(frame) == 10
   end
 
-  def strike_bonus(true, rest) when length(rest) < 3 do
+  def strike_bonus(_is_strike = true, rest) when length(rest) < 3 do
     0
   end
 
-  def strike_bonus(true, rest) do
+  def strike_bonus(_is_strike = true, rest) do
     hd(rest) + hd(tl(rest))
   end
 
-  def strike_bonus(false, _) do
+  def strike_bonus(_is_strike = false, _) do
     0
   end
 
