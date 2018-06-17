@@ -1,13 +1,16 @@
 defmodule BowlingGame do
+  @spec start()::pid
   def start() do
     {:ok, pid} = GenServer.start(BowlingGameServer, [])
     pid
   end
 
+  @spec roll(pid, integer)::list
   def roll(game_pid, pins) do
     GenServer.call(game_pid, {:roll, pins})
   end
 
+  @spec score(pid)::integer
   def score(game_pid) do
     GenServer.call(game_pid, {:score})
   end

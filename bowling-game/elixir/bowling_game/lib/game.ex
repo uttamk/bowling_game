@@ -1,22 +1,29 @@
 defmodule BowlingGame.Game do
+  @type pin_throw :: integer
+  @type game_state :: list(pin_throw)
+  @type game_score :: integer
+
+  @spec init() :: game_state
   def init do
     []
   end
 
+  @spec roll(game_state, pin_throw) :: game_state
   def roll(rolled_pins, pins) do
-      rolled_pins ++ [pins]
+    rolled_pins ++ [pins]
   end
 
+  @spec score(game_state) :: game_score
   def score(rolled_pins) do
     frame_scores(rolled_pins)
     |> Enum.sum()
   end
 
-  def frame_scores([]) do
+  defp frame_scores([]) do
     []
   end
 
-  def frame_scores(rolled_pins) do
+  defp frame_scores(rolled_pins) do
     no_of_throws = number_of_throws(rolled_pins)
 
     frame = Enum.take(rolled_pins, no_of_throws)
@@ -25,62 +32,62 @@ defmodule BowlingGame.Game do
     [single_frame_score(frame, rest)] ++ frame_scores(rest)
   end
 
-  def single_frame_score(frame, rest) do
+  defp single_frame_score(frame, rest) do
     frame_score = Enum.sum(frame)
     frame_score + strike_bonus_if_any(frame, rest) + spare_bonus_if_any(frame, rest)
   end
 
-  def spare_bonus_if_any(frame, rest) do
+  defp spare_bonus_if_any(frame, rest) do
     is_spare?(frame)
     |> spare_bonus(rest)
   end
 
-  def strike_bonus_if_any(frame, rest) do
+  defp strike_bonus_if_any(frame, rest) do
     is_strike?(frame)
     |> strike_bonus(rest)
   end
 
-  def is_spare?(frame) when length(frame) == 1 do
+  defp is_spare?(frame) when length(frame) == 1 do
     false
   end
 
-  def is_spare?(frame) do
+  defp is_spare?(frame) do
     Enum.sum(frame) == 10
   end
 
-  def spare_bonus(_is_spare = true, rest) do
+  defp spare_bonus(_is_spare = true, rest) do
     hd(rest)
   end
 
-  def spare_bonus(_is_spare = false, _) do
+  defp spare_bonus(_is_spare = false, _) do
     0
   end
 
-  def is_strike?(frame) when length(frame) != 1 do
+  defp is_strike?(frame) when length(frame) != 1 do
     false
   end
 
-  def is_strike?(frame) do
+  defp is_strike?(frame) do
     Enum.sum(frame) == 10
   end
 
-  def strike_bonus(_is_strike = true, rest) when length(rest) < 3 do
+  defp strike_bonus(_is_strike = true, rest) when length(rest) < 3 do
     0
   end
 
-  def strike_bonus(_is_strike = true, rest) do
+  defp strike_bonus(_is_strike = true, rest) do
     hd(rest) + hd(tl(rest))
   end
 
-  def strike_bonus(_is_strike = false, _) do
+  defp strike_bonus(_is_strike = false, _) do
     0
   end
 
-  def number_of_throws(rolled_pins) when hd(rolled_pins) == 10 do
+  defp number_of_throws(rolled_pins) when hd(rolled_pins) == 10 do
     1
   end
 
-  def number_of_throws(_) do
+  defp number_of_throws(_) do
     2
   end
 end
