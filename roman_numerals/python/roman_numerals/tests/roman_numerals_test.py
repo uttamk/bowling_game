@@ -32,8 +32,8 @@ class RomanNumeralsTest(unittest.TestCase):
 
     @staticmethod
     def test_four_letters():
-        value = convert_to_decimal("CMILD")
-        assert value == 1351
+        value = convert_to_decimal("MCMXCIV")
+        assert value == 1994
 
     @staticmethod
     def test_five_letters():
