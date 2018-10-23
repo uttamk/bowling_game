@@ -44,6 +44,8 @@ class RomanNumeralsTest(unittest.TestCase):
             convert_to_decimal("LM")
         with pytest.raises(ArgumentError):
             convert_to_decimal("MCLD")
+        with pytest.raises(ArgumentError):
+            convert_to_decimal("XYZ")
 
 
 if __name__ == '__main__':

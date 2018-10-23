@@ -21,7 +21,10 @@ def _decimal_value(roman, decimal):
 
 
 def _decimal_value_1(roman):
-    return _single_letter_numeral_map[roman]
+    try:
+        return _single_letter_numeral_map[roman]
+    except KeyError:
+        raise ArgumentError("Invalid Roman Numeral: should be one of {0}".format(_single_letter_numeral_map))
 
 
 def _decimal_value_2(first, second):
@@ -32,7 +35,9 @@ def _decimal_value_2(first, second):
     elif _is_valid_subtraction(first_decimal, second_decimal):
         return second_decimal - first_decimal
     else:
-        raise ArgumentError()
+        raise ArgumentError(
+            "Invalid Roman Numeral: only I, X and C are allowed as subtractive numerals"
+            " and the following numeral must not be more than 100 times the first")
 
 
 def _is_valid_subtraction(first_decimal, second_decimal):
