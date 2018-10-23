@@ -43,6 +43,10 @@ def test_raise_exception_on_invalid_input():
         convert_to_decimal("MCLD")
     with pytest.raises(ValueError):
         convert_to_decimal("XYZ")
+    with pytest.raises(ValueError):
+        convert_to_decimal("MIL")
+    with pytest.raises(ValueError):
+        convert_to_decimal("MDDIV")
 
 
 if __name__ == '__main__':

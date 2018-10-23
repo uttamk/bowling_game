@@ -40,6 +40,6 @@ def _decimal_value_2(first, second):
 
 def _is_valid_subtraction(first_decimal, second_decimal):
     valid_first_numeral = first_decimal in _subtractive_numerals
-    second_by_first_lte_100 = second_decimal / first_decimal <= 100
+    second_at_most_10_times_first = second_decimal / first_decimal <= 10
 
-    return valid_first_numeral and second_by_first_lte_100
+    return valid_first_numeral and second_at_most_10_times_first
