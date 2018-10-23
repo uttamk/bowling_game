@@ -29,7 +29,14 @@ def _decimal_value_2(first, second):
     second_decimal = _decimal_value_1(second)
     if first_decimal >= second_decimal:
         return first_decimal + second_decimal
-    elif first_decimal in _subtractive_numerals and second_decimal / first_decimal <= 100:
+    elif _is_valid_subtraction(first_decimal, second_decimal):
         return second_decimal - first_decimal
     else:
         raise ArgumentError()
+
+
+def _is_valid_subtraction(first_decimal, second_decimal):
+    valid_first_numeral = first_decimal in _subtractive_numerals
+    second_by_first_lte_100 = second_decimal / first_decimal <= 100
+
+    return valid_first_numeral and second_by_first_lte_100
