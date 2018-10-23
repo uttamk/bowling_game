@@ -1,4 +1,7 @@
 import unittest
+from _ctypes import ArgumentError
+
+import pytest
 
 from roman_numerals.converter import convert_to_decimal
 
@@ -31,14 +34,16 @@ class RomanNumeralsTest(unittest.TestCase):
         assert convert_to_decimal("MVI") == 1006
 
     @staticmethod
-    def test_four_letters():
-        value = convert_to_decimal("CMILD")
-        assert value == 1351
-
-    @staticmethod
     def test_five_letters():
         value = convert_to_decimal("XXXIX")
         assert value == 39
+
+    @staticmethod
+    def test_raise_exception_on_invalid_input():
+        with pytest.raises(ArgumentError):
+            convert_to_decimal("LM")
+        with pytest.raises(ArgumentError):
+            convert_to_decimal("MCLD")
 
 
 if __name__ == '__main__':
