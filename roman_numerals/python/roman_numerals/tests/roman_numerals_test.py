@@ -36,7 +36,7 @@ def test_five_letters():
     assert value == 39
 
 
-def test_raise_exception_on_invalid_input():
+def test_raise_exception_on_invalid_subtractive_digits():
     with pytest.raises(ValueError):
         convert_to_decimal("LM")
     with pytest.raises(ValueError):
@@ -45,8 +45,13 @@ def test_raise_exception_on_invalid_input():
         convert_to_decimal("XYZ")
     with pytest.raises(ValueError):
         convert_to_decimal("MIL")
+    # with pytest.raises(ValueError):
+    #     convert_to_decimal("MDDIV")
+
+
+def test_raise_exception_when_one_letter_is_repeated_more_than_three_times_in_succession():
     with pytest.raises(ValueError):
-        convert_to_decimal("MDDIV")
+        convert_to_decimal("IIII")
 
 
 if __name__ == '__main__':
