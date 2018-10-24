@@ -1,16 +1,11 @@
-import re
+from roman_numerals.validations import validate
 
 _single_letter_numeral_map = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
 _subtractive_numerals = [1, 10, 100]
 
 
-def _validate(roman):
-    if re.match(r'([A-Z])\1{3,}', roman):
-        raise ValueError("")
-
-
 def convert_to_decimal(roman):
-    _validate(roman)
+    validate(roman)
     reversed_roman = roman[::-1]
     return _decimal_value(reversed_roman, 0)
 
@@ -26,16 +21,16 @@ def _decimal_value(roman, total_decimal):
         return _decimal_value(roman[2:], new_total_decimal)
 
 
-def _decimal_value_1(roman):
+def _decimal_value_1(single_numeral):
     try:
-        return _single_letter_numeral_map[roman]
+        return _single_letter_numeral_map[single_numeral]
     except KeyError:
         raise ValueError("Invalid Roman Numeral: should be one of {0}".format(_single_letter_numeral_map))
 
 
-def _decimal_value_2(first, second):
-    first_decimal = _decimal_value_1(first)
-    second_decimal = _decimal_value_1(second)
+def _decimal_value_2(first_single_numeral, second_single_numeral):
+    first_decimal = _decimal_value_1(first_single_numeral)
+    second_decimal = _decimal_value_1(second_single_numeral)
     if first_decimal >= second_decimal:
         return first_decimal + second_decimal
     elif _is_valid_subtraction(first_decimal, second_decimal):
