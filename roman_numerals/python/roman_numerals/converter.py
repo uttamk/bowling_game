@@ -1,11 +1,9 @@
-from roman_numerals.validations import validate
-
-_single_letter_numeral_map = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
-_subtractive_numerals = [1, 10, 100]
+from roman_numerals import single_numeral_map
+from roman_numerals.validations import validate_numeral, validate_subtraction
 
 
 def convert_to_decimal(roman):
-    validate(roman)
+    validate_numeral(roman)
     reversed_roman = roman[::-1]
     return _decimal_value(reversed_roman, 0)
 
@@ -18,14 +16,12 @@ def _decimal_value(roman, total_decimal):
         return total_decimal + _decimal_value_1(roman[0])
     else:
         new_total_decimal = total_decimal + _decimal_value_2(roman[1], roman[0])
-        return _decimal_value(roman[2:], new_total_decimal)
+        rest_of_roman = roman[2:]
+        return _decimal_value(rest_of_roman, new_total_decimal)
 
 
 def _decimal_value_1(single_numeral):
-    try:
-        return _single_letter_numeral_map[single_numeral]
-    except KeyError:
-        raise ValueError("Invalid Roman Numeral: should be one of {0}".format(_single_letter_numeral_map))
+    return single_numeral_map[single_numeral]
 
 
 def _decimal_value_2(first_single_numeral, second_single_numeral):
@@ -33,16 +29,6 @@ def _decimal_value_2(first_single_numeral, second_single_numeral):
     second_decimal = _decimal_value_1(second_single_numeral)
     if first_decimal >= second_decimal:
         return first_decimal + second_decimal
-    elif _is_valid_subtraction(first_decimal, second_decimal):
-        return second_decimal - first_decimal
     else:
-        raise ValueError(
-            "Invalid Roman Numeral: only I, X and C are allowed as subtractive numerals"
-            " and the following numeral must not be more than 100 times the first")
-
-
-def _is_valid_subtraction(first_decimal, second_decimal):
-    valid_first_numeral = first_decimal in _subtractive_numerals
-    second_at_most_10_times_first = second_decimal / first_decimal <= 10
-
-    return valid_first_numeral and second_at_most_10_times_first
+        validate_subtraction(first_decimal, second_decimal)
+        return second_decimal - first_decimal

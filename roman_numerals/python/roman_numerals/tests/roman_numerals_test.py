@@ -2,12 +2,12 @@ import unittest
 
 import pytest
 
+from roman_numerals import single_numeral_map
 from roman_numerals.converter import convert_to_decimal
 
 
 def test_single_letter_numerals():
-    single_letter_numeral_map = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
-    for numeral, decimal in single_letter_numeral_map.items():
+    for numeral, decimal in single_numeral_map.items():
         assert convert_to_decimal(numeral) == decimal
 
 
