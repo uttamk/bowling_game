@@ -2,12 +2,12 @@ import unittest
 
 import pytest
 
-from roman_numerals import single_numeral_map
+from roman_numerals import single_numeral_to_decimal_map
 from roman_numerals.converter import convert_to_decimal
 
 
 def test_single_letter_numerals():
-    for numeral, decimal in single_numeral_map.items():
+    for numeral, decimal in single_numeral_to_decimal_map.items():
         assert convert_to_decimal(numeral) == decimal
 
 
